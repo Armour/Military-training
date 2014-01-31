@@ -1,5 +1,5 @@
 <?php 
-	echo form_open('vote/add_essay');
+	echo form_open('military/add_essay');
 	
 	$data = array(
 		'name' => 'title',

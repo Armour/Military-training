@@ -1,6 +1,6 @@
 <html>
 <head>
-	<script> function RefreshCode(obj){ obj.src = "http://localhost/lol/sth/graph.php?code=" + Math.random(); } </script>
+	<script> function RefreshCode(obj){ obj.src = "http://localhost/junxun/sth/graph.php?code=" + Math.random(); } </script>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 

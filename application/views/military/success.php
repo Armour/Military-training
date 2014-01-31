@@ -1,5 +1,5 @@
 <?php
 	echo "already add it~";
 	echo "            ";
-	echo anchor('vote/index','back to index~');
+	echo anchor('military/index','back to index~');
 ?>	
