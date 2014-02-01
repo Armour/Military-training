@@ -8,13 +8,17 @@
 			$this->load->model('military_model');
 			$this->load->helper('url');
 			$this->load->helper('form');
+			$this->load->library('parser');
 		}
 
 		public function index()
 		{	
-			$data = $this->military_model->get_essay_title();
+			$num = $this->military_model->get_essay_number();
+			for ($i=0; $i<$num; $i++)
+		    	$this->data['essay'][$i] = $this->military_model->get_essay_in_short($i+1);
+			//var_dump($this->data);
 			$this->load->view('templates/header');
-			$this->load->view('military/index',$data);
+			$this->parser->parse('military/index',$this->data);
 			$this->load->view('templates/footer');
 		}
 		
@@ -114,20 +118,6 @@
 				}
 			}
 		}
-		
-		public function vote_it()
-		{
-			$this->load->view('templates/header');
-			$this->load->view('military/vote');
-			$this->load->view('templates/footer');
-		}
-
-		public function show_vote_result()
-		{
-			$this->load->view('templates/header');
-			$this->load->view('military/result');
-			$this->load->view('templates/footer');
-		}
 
 		public function add_essay()
 		{
@@ -160,10 +150,10 @@
 			if (! is_numeric($mark)) $mark = 0;
 			if ($mark!=0)
 			{
-				$data['query'] = $this->military_model->get_essay($mark);
+				$this->data['essay'] = $this->military_model->get_essay($mark);
 				
 				$this->load->view('templates/header');
-				$this->load->view('military/show',$data);
+				$this->parser->parse('military/show',$this->data);
 				$this->load->view('templates/footer');
 			}
 		}

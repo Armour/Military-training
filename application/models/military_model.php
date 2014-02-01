@@ -12,6 +12,8 @@
 			(
 				'title' => $this->input->post('title',TRUE),
 				'essay' => $this->input->post('essay',TRUE),
+				'author' => $this->input->post('author',TRUE),
+				'time' => $this->input->post('time',TRUE),
 			);
 			$this->db->insert('military_essay',$data);
 		}
@@ -27,32 +29,40 @@
 			$this->db->insert('military_user',$data);
 		}
 		
+		function get_essay_number()
+		{
+			$query = $this->db->get('lol_essay');
+			return $query->num_rows();
+		}
+		
+		function get_essay_in_short($slug = 0)
+		{
+			if (!is_numeric($slug)) $slug = 0;
+			if ($slug!=0)
+			{
+				$array = array('id'=>$slug);
+				$query = $this->db->select('title,author,time')->get_where('military_essay',$array);	
+				if ($query->num_row()>0)
+				{
+					$data = $query->row_array();
+					return $data;
+				}	
+			}
+		}
+		
 		function get_essay($slug = 0)
 		{
+			if (!is_numeric($slug)) $slug = 0;
 			if ($slug!=0)
 			{
 				$array = array('id'=>$slug);
 				$query = $this->db->get_where('military_essay',$array);
-				return $query->row_array();
-			}
-		}
-		
-		function get_essay_title()
-		{
-			$query= $this->db->get('military_essay');
-			if (( $query->num_rows() > 0))
-			{
-				$temp = 1;
-				foreach (($query->result_array()) as $row):
+				if ($query->num_row()>0)
 				{
-					$data['results'][$temp]['title'] = $row['title'];
-					$data['results'][$temp]['id'] = $row['id'];
-					$temp++;
+					$data = $query->row_array();
+					return $data;
 				}
-				endforeach;
-				$data['num'] = $temp - 1;
 			}
-			return  $data;
 		}
 		
 		function find_user()
